@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+<!--
+加入C命名空间
+ xmlns:c="http://www.springframework.org/schema/c"
+-->
+
+
+<!--    private  String address;
+    private String name;
+    private Data businessHours;-->
+    <bean id="date" class="java.util.Date"/>
+
+<!--    <bean id="shopBean" class="com.nfjh.spring6.bean.Shop" c:_0="天津市" c:_1="小张水果" c:_2-ref="date"/>-->
+        <bean id="shopBean" class="com.nfjh.spring6.bean.Shop" c:address="天津市" c:name="小张水果" c:businessHours-ref="date"/>
+
+        <!--
+        private Date date;
+        private String clientLog;
+        private  String clientType;
+        -->
+<bean id="conBean" class="com.nfjh.spring6.bean.Con" c:_0-ref="date" c:_1="QQ_Logging" c:_2="Chat"/>
+
+
+
+    <!--
+    private String username;
+    private  String passwd;
+    private int age;
+
+    private User user;
+    private String clientLog;
+    private  String clientType;
+-->
+    <bean id="userConBean" class="com.nfjh.spring6.bean.User">
+        <property name="username" value="zhangsan"/>
+        <property name="passwd" value="123"/>
+        <property name="age" value="20"/>
+    </bean>
+
+
+    <bean id="conBean2" class="com.nfjh.spring6.bean.Con2" c:_0-ref="userConBean" c:_1="QQ_Log" c:_2="Chat"/>
+
+</beans>

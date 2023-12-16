@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--组件扫描-->
+    <context:component-scan base-package="com.ndjh.spring6.service"/>
+
+    <bean id="logAspect" class="com.ndjh.spring6.service.LogAspect"/>
+    <bean id="userService" class="com.ndjh.spring6.service.UserService"/>
+    <bean id="safetyAspect" class="com.ndjh.spring6.service.SafetyAspect"/>
+
+<!--    开启自动代理-->
+<!-- proxy-target-class="true" 强制使用CGLIB动态代理
+          proxy-target-class="false" 默认值 ,依情况而定使用哪种代理
+                    有接口使用JDK代理,其他使用CGLIB代理
+
+-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+</beans>

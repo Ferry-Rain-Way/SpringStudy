@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--根据名称自动装配
+    1、添加 autowire属性 值为 byName
+    2、被装配的bean的id必须是setXxx()方法的xxx
+    -->
+    <bean id="clientBean" class="com.nfjh.spring6.bean.Client" autowire="byName">
+        <property name="clientName" value="QQ"/>
+    </bean>
+
+    <bean id="user" class="com.nfjh.spring6.bean.User">
+        <property name="age" value="20"/>
+        <property name="passwd" value="1221"/>
+        <property name="username" value="zhangsan"/>
+     </bean>
+
+
+    <!--
+    根据类型进行自动进行装配
+    1、添加 autowire属性 值为 byType
+    2、被装配的bean没有id,且只能有一个实例,如果有多个就会出现错误
+    -->
+<!--
+<bean class="java.util.Date"/>
+Date类型注入失败,为null
+怀疑是普通类型,不走byType进行注入
+-->
+
+<!--<bean class="com.nfjh.spring6.bean.User"/>-->
+<bean id="clientBean2" class="com.nfjh.spring6.bean.Client" autowire="byType">
+    <property name="clientName" value="QQ"/>
+</bean>
+
+</beans>

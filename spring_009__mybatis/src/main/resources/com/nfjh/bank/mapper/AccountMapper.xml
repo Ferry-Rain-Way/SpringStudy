@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nfjh.bank.mapper.AccountMapper">
+
+<!-- void insert(Account account); -->
+    <insert id="insert" parameterType="Account">
+        insert into t_act values(#{actno},#{balance})
+    </insert>
+
+<!--    boolean deleteByActno(String actno); -->
+    <delete id="deleteByActno">
+        delete from t_act where actno = #{actno}
+    </delete>
+
+
+<!--         boolean updateActno(Account actno); -->
+    <update id="updateActno" parameterType="Account">
+        update t_act set balance = #{balance} where actno = #{actno}
+    </update>
+
+<!--    Account selectByActno(String actno);-->
+    <select id="selectByActno" resultType="Account">
+        select * from t_act where actno = #{actno}
+    </select>
+
+<!--   List<Account> selectAll(); -->
+    <select id="selectAll" resultType="list">
+        select * from t_act
+    </select>
+</mapper>

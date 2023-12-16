@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+<!--
+    private List<String> name;
+    private Set<String> ISBN;
+    private Properties type;
+-->
+
+    <util:list id="bookList">
+        <value>三体</value>
+        <value>活着</value>
+    </util:list>
+
+    <util:set id="bookSet">
+            <value>1211121</value>
+            <value>22332232</value>
+    </util:set>
+
+    <util:properties id="bookProp">
+        <prop key="1">科幻</prop>
+        <prop key="2">文学</prop>
+    </util:properties>
+
+
+    <bean id="bookBean" class="com.nfjh.spring6.bean.Book">
+        <property name="name" ref="bookList"/>
+        <property name="ISBN" ref="bookSet"/>
+        <property name="type" ref="bookProp"/>
+     </bean>
+
+    <util:list id="bookList2">
+        <value>流浪地球</value>
+        <value>诗经</value>
+    </util:list>
+
+    <bean id="bookBean2" class="com.nfjh.spring6.bean.Book">
+        <property name="name" ref="bookList2"/>
+        <property name="ISBN" ref="bookSet"/>
+        <property name="type" ref="bookProp"/>
+    </bean>
+</beans>

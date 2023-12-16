@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--spring默认bean的构建使用单例模式
+    单例模式对象给的创建在
+    new ClassPathXmlApplicationContext()的执行中
+    -->
+    <bean id="scopeBean" class="com.nfjh.spring6.bean.ScopeBean" scope="singleton"/>
+
+    <!--可以更改为原型模式(每次获取的都是新的实例对象)
+     此时执行new ClassPathXmlApplicationContext()时不在创建对象
+     在执行 getBean()方法时创建对象
+    -->
+    <bean id="scopeBean" class="com.nfjh.spring6.bean.ScopeBean" scope="prototype"/>
+
+</beans>

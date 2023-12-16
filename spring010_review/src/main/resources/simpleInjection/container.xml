@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--单个Bean ,为上面的测试做准备-->
+    <bean id="wifi1" class="com.ts.bean.Wifi">
+        <constructor-arg index="0" value="hello-home"/>
+        <constructor-arg index="1" value="no password "/>
+    </bean>
+
+    <!--单个Bean ,为上面的测试做准备-->
+    <bean id="wifi2" class="com.ts.bean.Wifi">
+        <constructor-arg index="0" value="iPhone 13 Pro max"/>
+        <constructor-arg index="1" value="123456"/>
+    </bean>
+
+
+    <!--“容器类数据的注入”-->
+    <bean id="containerBean" class="com.ts.bean.Container">
+        <!--数组-->
+        <property name="arr">
+            <array>
+                <value>"String"</value>
+                <value>"World!"</value>
+            </array>
+        </property>
+
+        <property name="refArr">
+            <array>
+                <ref bean="wifi1"/>
+                <ref bean="wifi2"/>
+            </array>
+        </property>
+
+        <!--List-->
+        <property name="list">
+            <list>
+                <value>list<![CDATA[<]]>String<![CDATA[>]]></value>
+                <!--以上等效于 list<String>   -->
+                <value>list&lt;String&gt;</value>
+            </list>
+        </property>
+
+        <property name="refList">
+            <list>
+                <ref bean="wifi1"/>
+                <ref bean="wifi2"/>
+            </list>
+        </property>
+
+        <!--set-->
+        <property name="set">
+            <set>
+                <value>set1</value>
+                <value>set2</value>
+            </set>
+        </property>
+
+        <property name="refSet">
+            <set>
+                <ref bean="wifi1"/>
+                <ref bean="wifi2"/>
+            </set>
+        </property>
+
+        <!--Map-->
+        <property name="map">
+            <map>
+                <entry key="EN" value="英"/>
+                <entry key="CN" value="中"/>
+            </map>
+        </property>
+
+        <property name="refMap">
+            <map>
+                <!-- 注意：使用CDATA时，不能使用value属性，只能使用value标签。
+                    所以此处只能使用转义符-->
+                <entry key-ref="wifi1" value="&lt;String&gt;"/>
+                <entry key-ref="wifi2" value="hello"/>
+            </map>
+        </property>
+
+        <!--Properties-->
+        <property name="properties">
+            <props>
+                <prop key="prop1_key">hello</prop>
+                <prop key="prop2_key">world</prop>
+            </props>
+        </property>
+
+    </bean>
+</beans>

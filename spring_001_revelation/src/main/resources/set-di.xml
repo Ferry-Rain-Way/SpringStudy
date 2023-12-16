@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--外部Bean-->
+    <bean id="orderDaoBean" class="com.nfjh.spring6.dao.OrderDao"/>
+
+    <bean id="osBeanOut" class="com.nfjh.spring6.service.OrderService">
+        <property name="orderDao" ref="orderDaoBean"/>
+    </bean>
+
+<!--内部bean-->
+    <!--Ctrl + Alt + Shift + C-->
+    <bean id="osBeanIn" class="com.nfjh.spring6.service.OrderService">
+        <property name="orderDao">
+            <bean class="com.nfjh.spring6.dao.OrderDao"/>
+        </property>
+    </bean>
+
+    <!--注入简单类型-->
+    <bean id="userBean" class="com.nfjh.spring6.bean.User">
+        <property name="username" value="zhangsan"/>
+        <property name="passwd" value="123"/>
+        <property name="age" value="20"/>
+    </bean>
+
+
+    <!--级联属性赋值-->
+    <bean id="userBeanCascade" class="com.nfjh.spring6.bean.User"/>
+
+    <bean id="clientBean" class="com.nfjh.spring6.bean.Client">
+        <property name="clientName" value="QQ"/>
+        <!--使用级联属性赋值,Client 中要有getUser()方法-->
+        <property name="user" ref="userBeanCascade"/>
+        <!--使用级联属性赋值,user必须要有对应的username、passwd、age get方法-->
+        <property name="user.username" value="张三"/>
+        <property name="user.passwd" value="123456"/>
+        <property name="user.age" value="21"/>
+    </bean>
+
+    <!--
+    简答类型数组注入
+    property > array > value
+
+        private  String [] lessonName ;
+    -->
+    <bean id="lessonBean" class="com.nfjh.spring6.bean.Lesson">
+        <property name="lessonName">
+            <array>
+                <value>JAVA</value>
+                <value>MYBATIS</value>
+                <value>SPRING</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="lessonBean2" class="com.nfjh.spring6.bean.Lesson">
+        <property name="lessonName">
+            <array>
+                <value>MYSQL</value>
+                <value>JDBC</value>
+                <value>AJAX</value>
+            </array>
+        </property>
+    </bean>
+
+
+    <!--引用类型数组注入
+    private String name;
+    private Lesson  [] lessons;
+
+    property > array > ref[bean]
+    -->
+    <bean id="studentBean" class="com.nfjh.spring6.bean.Student">
+        <property name="name" value="张三"/>
+        <property name="lessons">
+            <array>
+               <ref bean="lessonBean"/>
+                <ref bean="lessonBean2"/>
+            </array>
+        </property>
+    </bean>
+
+<!--List注入
+简单类型
+    property > list > value
+引用类型
+    property > list > ref[bean]
+-->
+
+    <bean id="personBean" class="com.nfjh.spring6.bean.Person">
+        <property name="userList">
+            <list>
+                <ref bean="userBean"/>
+                <ref bean="userBeanCascade"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="personBean2" class="com.nfjh.spring6.bean.Person">
+        <property name="userList">
+            <list>
+                <ref bean="userBean"/>
+                <ref bean="userBeanCascade"/>
+            </list>
+        </property>
+        <property name="userSet">
+            <set  >
+                <ref bean="userBean"/>
+                <ref bean="userBeanCascade"/>
+            </set>
+        </property>
+    </bean>
+
+<!--Map注入
+简单类型
+    property > map > entry[key &  value]
+
+引用类型
+    property > map >  enter[key-ref & value-ref]
+-->
+    <bean id="personMapBean" class="com.nfjh.spring6.bean.Person">
+        <property name="userMap">
+            <map>
+                <entry key="1" value-ref="userBean"/>
+                <entry key="2" value-ref="userBeanCascade"/>
+            </map>
+        </property>
+    </bean>
+    
+    <!--特殊Map类型Properties类型注入-->
+    <bean id="personProBean" class="com.nfjh.spring6.bean.Person">
+        <property name="properties" >
+            <props>
+                <!--注意 prop的key 与值都是String类型-->
+                <prop key="driver">com.nfjh.hello</prop>
+                <prop key="url">www.baidu.com</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <!--null值的注入-->
+    <bean id="userNullBean" class="com.nfjh.spring6.bean.User">
+        <!--第一种注入方式,不注入自动注入null-->
+       <!--此处不给age 注入值-->
+
+        <!--第二中注入方式,手动标签注入null-->
+        <property name="username">
+            <null/>
+        </property>
+
+        <!--错误的注入,这种是注入了"null"字符串,不是注入正真的null-->
+        <property name="passwd" value="null"/>
+    </bean>
+
+
+    <!--
+    空字符串的注入
+    -->
+    <!--null值的注入-->
+    <bean id="userStrNullBean" class="com.nfjh.spring6.bean.User">
+        <!--第一种注入方式 value中不给值即可-->
+        <property name="username" value=""/>
+
+        <!--第二中注入方式,手动标签注入""-->
+        <property name="passwd">
+            <value/>
+        </property>
+    </bean>
+
+
+    <!--特殊符号的注入-->
+    <bean id="specialSymbolsBean" class="com.nfjh.spring6.bean.User">
+        <!--第一种:只用实体符号
+        这里就之列出一种
+        >   &gt;
+         <property name="username" value="2 < 3"/>
+        -->
+        <property name="username" value="2 &gt; 3"/>
+
+        <!--第二种:使用value标签 + <![CDATA[2<3]]>-->
+        <property name="passwd">
+            <value> <![CDATA[2<3]]> </value>
+        </property>
+        <!--
+        注意点1：
+        要使用value标签直接放在value中是不对的!!!!
+        <property name="passwd" value="<![CDATA[2<3]]>"/>
+
+        注意点2：
+        <value></value>中的内容为注入的内容
+        所以如果这么写结果为
+        <property name="passwd">
+            <value>
+                <![CDATA[2<3]]>
+            </value>
+        </property>
+        User{username='2 > 3', passwd='
+                2<3
+            ', age=0}
+
+            注意点3:
+            <![CDATA[]]> 中的字符全部要大写
+            注意点:
+            不管是使用实体符还是!<[CDATA[]]>这都是XML的语法
+        -->
+
+    </bean>
+</beans>

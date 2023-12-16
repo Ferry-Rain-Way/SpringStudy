@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--构造注入-->
+    <bean id="wifiBean" class="com.ts.bean.Wifi">
+        <constructor-arg index="0" value="Hello_Home"/>
+        <constructor-arg index="1" value="@Hello_123Home"/>
+    </bean>
+
+    <!--set注入-->
+    <bean id="userBean" class="com.ts.bean.User">
+        <property name="userName" value="GuoHongYu"/>
+        <property name="otherPhoneNumber">
+            <array>
+                <value>张三</value>
+                <value>李四</value>
+                <value>王五</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="phoneBean" class="com.ts.bean.Phone">
+        <property name="phoneNumber" value="18655260920"/>
+        <property name="phoneUser" ref="userBean"/>
+        <!--
+        此处的ref就是一个外部bean的注入
+        -->
+    </bean>
+
+    <!--内部bean的注入就是在注入时不使用ref,
+    直接在property标签的内部写一个 bean标签-->
+
+    <bean id="phoneBean2" class="com.ts.bean.Phone">
+        <property name="phoneNumber" value="1008611"/>
+        <property name="phoneUser">
+            <!--以下嵌套在内部的bean就是一个"内部bean"-->
+            <bean id="userBean2" class="com.ts.bean.User">
+                <property name="userName" value="GuoHongYu"/>
+                <property name="otherPhoneNumber">
+                    <array>
+                        <value>张三</value>
+                        <value>李四</value>
+                        <value>王五</value>
+                    </array>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <!--级联属性赋值-->
+    <!--数组赋值-->
+    <bean id="cascadeUser" class="com.ts.bean.User"/>
+
+    <bean id="cascadePhone" class="com.ts.bean.Phone">
+        <property name="phoneNumber" value="119"/>
+        <property name="phoneUser" ref="cascadeUser"/>
+        <property name="phoneUser.userName" value="guohongyu"/>
+        <property name="phoneUser.otherPhoneNumber">
+            <array>
+                <value>zhangsan</value>
+                <value>lisi</value>
+                <value>wangwu</value>
+            </array>
+        </property>
+    </bean>
+
+</beans>

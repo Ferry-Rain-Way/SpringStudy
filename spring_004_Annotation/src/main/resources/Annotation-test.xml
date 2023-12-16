@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                                                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!--添加content命名空间、约束条件-->
+
+<!--开启包扫描-->
+<!--<context:component-scan base-package="com.nfjh.bean,com.nfjh.bean2"/>-->
+<context:component-scan base-package="com.nfjh"/>
+
+
+<bean id="userBean" class="com.nfjh.bean.User"/>
+
+<!--&lt;!&ndash;UserDaoForTX&ndash;&gt;-->
+<!--<bean id="userDaoForTX" class="com.nfjh.autowireTest.dao.impl.UserDaoForTX"/>-->
+</beans>

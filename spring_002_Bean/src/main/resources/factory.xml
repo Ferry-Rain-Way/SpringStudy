@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--构造方法实例化对象-->
+    <bean id="sweetBeanConstruct" class="com.nfjh.spring6.factory.Sweet"/>
+
+    <!--
+    1、简单工厂模式给"工厂类"注入
+    2、简单工厂模式的get方法是静态方法
+    -->
+    <bean id="sweetFactory" class="com.nfjh.spring6.factory.SweetFactory" factory-method="get"/>
+
+<!--
+factory-bean的方式获取对象
+-->
+    <bean id="sweetFactoryBean" class="com.nfjh.spring6.factory.SweetFactor_Bean"/>
+    <bean id="sweetBean" factory-bean="sweetFactoryBean" factory-method="get"/>
+
+    <!--FactoryBeanImpl是一个工厂bean
+    是实现了FactoryBean接口的特殊bean
+    而辅助spring实例化其它Bean对象的特殊bean
+    -->
+    <bean id="sweetFactoryBeanImpl" class="com.nfjh.spring6.factory.FactroyBeanImpl"/>
+
+
+    <!--通过factoryBean的方式创建Date对象-->
+    <bean id="date" class="com.nfjh.spring6.factory.DateFactoryBeanImpl">
+        <constructor-arg value="2001-09-20"/>
+    </bean>
+
+    <bean id="conBean" class="com.nfjh.spring6.factory.Con">
+        <property name="date" ref="date"/>
+        <property name="clientType" value="QQ"/>
+        <property name="clientLog" value="QQ_Log"/>
+    </bean>
+
+    <bean id="conBean2" class="com.nfjh.spring6.factory.Con">
+        <property name="date">
+            <bean class="com.nfjh.spring6.factory.DateFactoryBeanImpl">
+                <constructor-arg value="2001-09-20"/>
+            </bean>
+        </property>
+        <property name="clientType" value="WeChat"/>
+        <property name="clientLog" value="WeChat_Log"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--
+p命名空间
+1、修改头部
+    添加   xmlns:p="http://www.springframework.org/schema/p"
+
+2、直接使用
+           简单类型
+                p:属性名="属性值"
+          引用类型
+                p:属性名-ref="bean的id"
+-->
+    <bean id="userBean" class="com.nfjh.spring6.bean.User" p:age="0" p:passwd="haha" p:username="zhangsan"/>
+
+    <bean id="clientBean" class="com.nfjh.spring6.bean.Client" p:user-ref="userBean"  p:clientName="QQ"/>
+
+</beans>
+
